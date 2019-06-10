@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+
+<insert id="addcart" parameterType="com.com.dto.CartVO">
+		INSERT INTO cart (cartnum, userid, prodnum, cartstock) values 
+		(cart_seq.nextval, #{userid}, #{prodnum}, #{cartstock})
+</insert>
+
+<select id="cartlist" parameterType="String" resultType="com.com.dto.CartlistVO">
+	select
+  c.cartnum, c.userid, c.prodnum, c.cartstock, c.adddate,
+  p.prodname, p.prodprice, p.prodimg
+from cart c 
+  inner join product p
+  on c.prodnum = p.prodnum
+  where c.userid = #{userid}
+
+ </select>
+</mapper>

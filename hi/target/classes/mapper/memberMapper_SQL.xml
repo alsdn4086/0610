@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<!--로그인 -->
+	<select id="login" parameterType="com.com.dto.MemberVO"
+		resultType="String">
+		SELECT name,address from user_db where id = #{userid} AND pw =
+		#{userpw}
+	</select>
+	<!-- 회원체크 -->
+	<select id="checkMember" resultType="com.com.dto.MemberVO">
+		SELECT
+		name AS username,
+		id as userid,
+		pw as userpw,
+		address as useraddress
+		FROM user_db
+		WHERE id = #{userid} AND pw = #{userpw}
+	</select>
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="com.com.dto.MemberVO">
+		INSERT INTO user_db
+		values(#{username},
+		#{userid},#{userpw},#{useraddress})
+	</insert>
+	<!-- 회원탈퇴 -->
+	<delete id="delete" parameterType="com.com.dto.MemberVO">
+		DELETE FROM user_db
+		where id = #{userid}
+	</delete>
+	<!-- 아이디중복검사 -->
+	<select id="idcheck" resultType="com.com.dto.MemberVO">
+		select id as userid from user_db
+		where id = #{userid}
+	</select>
+</mapper>
